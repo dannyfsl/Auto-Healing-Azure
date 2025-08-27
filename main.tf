@@ -30,6 +30,13 @@ module "network" {
   tags                = var.tags
 }
 
+module "lb" {
+  source              = "./modules/lb"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  prefix              = var.prefix
+  tags                = var.tags
+}
 
 module "compute" {
   source              = "./modules/compute"
