@@ -1,0 +1,16 @@
+init:
+	terraform init
+	terraform init -upgrade   
+
+Create plan:
+	terraform plan -var-file="<path>\terraform.tfvars" -out="<path>\tf.plan"
+    
+Readable Plan:
+	terraform show -no-color "<path>\tf.plan" > "<path>\plan.txt
+	
+apply (you need to know 100% of what you are about to do before executing)
+	terraform apply <path>\tf.plan"
+	
+destroy (you need to know 100% of what you are about to do before executing)
+	terraform destroy -var-file="<path>\terraform.tfvars"
+	

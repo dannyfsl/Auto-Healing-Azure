@@ -30,7 +30,7 @@ variable "tags" {
   type        = map(string)
   default = {
     project     = "autohealing"
-    owner       = "you@example.com"
+    owner       = "tring_of_char"
     environment = "dev"
   }
 }
