@@ -48,38 +48,39 @@ Health check: VMSS uses LB probe for instance health; automatic repair is enable
 
 ## Quickstart
 1. Provider:
-   # Please review and update subscription_id for which the deployment is targeted/utilised. 
+   Please review and update subscription_id for which the deployment is targeted/utilised. 
 
 2. Input variables:
-   # Please review all items in terraform.tfvars file and set them up accordingly.
+   Please review all items in terraform.tfvars file and set them up accordingly.
    
-   # Brief description for each of variable
+   Brief description for each of variable
    var_name = prefix
-   # The value will be prefixed in front of the resouce name as they are created by relevant modules. 
+   The value will be prefixed in front of the resouce name as they are created by relevant modules. 
    
    var_name = location 
-   # This dictates which region all resouces to be created in 
+   This dictates which region all resouces to be created in 
 
    var_name = resource_group_name 
-   # Log on to Azure and locate/find the appropriate target resouce group for deployment. Important note - if unsure, it is best is to create a blank resource group with appropriate RBAC. All required resources will be created in this intended resouce group name.
+   Log on to Azure and locate/find the appropriate target resouce group for deployment. Important note - if unsure, it is best is to create a blank resource group with appropriate RBAC. All required resources will be created in this intended resouce group name.
 
    var_block_name = tags
-   # Self explaintory. They are for tagging all resouces.
+   Self explaintory. They are for tagging all resouces.
 
    var_name = manage_resource_group_tags
-   # This is control flag if you wish to update the tag of the target resouce group name. Currently it is set to be skipped.
+   This is control flag if you wish to update the tag of the target resouce group name. Currently it is set to be skipped.
    
    var_name = vm_size 
-   # This is size of linux VM to be crated by compute module. So review the available VM size suitable for your need. The Standard_B1ms is choosen simply it is lightweight, burstable workloads, as they offer a balance of performance and most economy choice.
+   This is size of linux VM to be crated by compute module. So review the available VM size suitable for your need. The Standard_B1ms is choosen simply it is lightweight, burstable workloads, as they offer a balance of performance and most economy choice.
 
    var_name = ssh_public_key_path 
-   # Generate ssh pair key. The compute module will setup linux VM with using ssh pair key authentication to install and setup NGINX so it will need to know where the ssh public key is located. Plase specifying the path of the folder storing this ssh public key. Please protect private ssh key.
+   Generate ssh pair key. The compute module will setup linux VM with using ssh pair key authentication to install and setup NGINX so it will need to know where the ssh public key is located. Plase specifying the path of the folder storing this ssh public key. Please protect private ssh key.
 
 3. Init & plan:
 
-   terraform init
-   terraform plan -var-file="<path>/terraform.tfvars" -out="<path>/tf.plan"
-   terraform show -no-color "<path>tf.plan" > "<path>plan.txt"
+   terraform init\
+   terraform plan -var-file="terraform.tfvars" -out="tf.plan"\
+   terraform show -no-color "tf.plan" > "plan.txt"\
 
-4. Apply (You need to know 100% of what you are aboiut to do before execution):
-   terraform apply "<path>/tf.plan"
+4. Apply (You need to know 100% for what you are about to do before execution):
+
+   terraform apply "tf.plan"
