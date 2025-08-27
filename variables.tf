@@ -11,10 +11,12 @@ variable "location" {
   type        = string
 }
 
+# Due to nature setting in Azure - this build targets an existed resource group.
+# There would be a senrio this build will create a new resource group.
 variable "resource_group_name" {
   description = "EXISTING resource group name to deploy into"
   type        = string
-  default     = "danny_rg"
+  default     = "existing_resource_group_name_here"
 }
 
 variable "manage_resource_group_tags" {

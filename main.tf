@@ -5,6 +5,7 @@ data "azurerm_resource_group" "existing" {
   name = var.resource_group_name
 }
 
+# Refer to an existing resource group and managning its tags only if allowed.
 # Optionally manage tags on the existing resource group
 # Set manage_resource_group_tags = true in terraform.tfvars to enable
 resource "azurerm_resource_group" "managed" {
@@ -13,8 +14,6 @@ resource "azurerm_resource_group" "managed" {
   name     = data.azurerm_resource_group.existing.name
   location = data.azurerm_resource_group.existing.location
   tags     = var.tags
-
-  # We don't create the RG — we adopt management for tags only if allowed.
 }
 
 # Use RG name and location from data source
