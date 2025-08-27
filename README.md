@@ -20,13 +20,13 @@ The codes are for single purpose which is auto-healing web tier that tolerate lo
 ## Monthly Cost Estimate (AUD, N+1 setup, 2 instances, most economical options) 
 Below is cost compaision for own reference only. It doesn't imply anything nor does it represent anything.
 
-Running full resources 24/7 in Azure (Standard LB + 2 x Standard_B1ms + Public IP + storage) will likely exceed AUD $20 / month. 
-Ways to keep costs close enought around AUD 20 for demonstration:
-    Use smallest possible SKU (e.g. Standard_B1ls if available) — lower cost.
-    Run resources only during working hours and destroy afterwards.
+Running full resources 24/7 in Azure (Standard LB + 2 x Standard_B1ms + Public IP + storage) will likely exceed AUD $20 / month.\
+Ways to keep costs close enought around AUD 20 for demonstration:\
+    Use smallest possible SKU (e.g. Standard_B1ls if available) — lower cost.\
+    Run resources only during working hours and destroy afterwards.\
     Use terraform plan only for assessment (no real costs).
 
- |Cost Component | Azure | AWS |
+ |Component Cost | Azure | AWS |
  | :--- | :---: | ---: |
  | Compute (2 x B1s / t4g.micro) | ~ $18 (2 × $9) | ~ $15 (2 × $7.5) |
  | Load Balancer | Basic LB ~ $7 | ALB ~ $20 (NLB ~ $15) |
@@ -37,49 +37,49 @@ Ways to keep costs close enought around AUD 20 for demonstration:
 
 
 ## Files & modules
-modules/network — VNet, subnet, NSG.
-modules/lb — Public IP, Standard LB, backend pool, probe, rule.
+modules/network — VNet, subnet, NSG.\
+modules/lb — Public IP, Standard LB, backend pool, probe, rule.\
 modules/compute — VMSS with cloud-init installing nginx and wiring into LB.
 
 ## Assumptions & notes
-Single-region: all resources are in one region and a single subnet (For the above mentioned purpose and scope does not require global or cross regions.).
-SSH key: provide a valid ssh_public_key_path to avoid file() errors.
+Single-region: all resources are in one region and a single subnet (For the above mentioned purpose and scope does not require global or cross regions.).\
+SSH key: provide a valid ssh_public_key_path to avoid file() errors.\
 Health check: VMSS uses LB probe for instance health; automatic repair is enabled.
 
 ## Quickstart
-1. Provider:
+1. Provider:\
    Please review and update subscription_id for which the deployment is targeted/utilised. 
 
-2. Input variables:
+2. Input variables:\
    Please review all items in terraform.tfvars file and set them up accordingly.
    
-   Brief description for each of variable
-   var_name = prefix
-   The value will be prefixed in front of the resouce name as they are created by relevant modules. 
+   Brief description for each of variable:\
+   var_name = prefix\
+   The value will be prefixed in front of the resouce name as they are created by relevant modules.
    
-   var_name = location 
-   This dictates which region all resouces to be created in 
+   var_name = location\
+   This dictates which region all resouces to be created in.
 
-   var_name = resource_group_name 
+   var_name = resource_group_name\
    Log on to Azure and locate/find the appropriate target resouce group for deployment. Important note - if unsure, it is best is to create a blank resource group with appropriate RBAC. All required resources will be created in this intended resouce group name.
 
-   var_block_name = tags
-   Self explaintory. They are for tagging all resouces.
+   var_block_name = tags\
+   Self explaintory. They are for tagging all resouces created by each of module.
 
-   var_name = manage_resource_group_tags
+   var_name = manage_resource_group_tags\
    This is control flag if you wish to update the tag of the target resouce group name. Currently it is set to be skipped.
    
-   var_name = vm_size 
+   var_name = vm_size\
    This is size of linux VM to be crated by compute module. So review the available VM size suitable for your need. The Standard_B1ms is choosen simply it is lightweight, burstable workloads, as they offer a balance of performance and most economy choice.
 
-   var_name = ssh_public_key_path 
+   var_name = ssh_public_key_path\
    Generate ssh pair key. The compute module will setup linux VM with using ssh pair key authentication to install and setup NGINX so it will need to know where the ssh public key is located. Plase specifying the path of the folder storing this ssh public key. Please protect private ssh key.
 
 3. Init & plan:
 
    terraform init\
    terraform plan -var-file="terraform.tfvars" -out="tf.plan"\
-   terraform show -no-color "tf.plan" > "plan.txt"\
+   terraform show -no-color "tf.plan" > "plan.txt"
 
 4. Apply (You need to know 100% for what you are about to do before execution):
 
