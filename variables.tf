@@ -34,3 +34,21 @@ variable "tags" {
     environment = "dev"
   }
 }
+
+variable "min_size" {
+  description = "VMSS instance count (N+1 requirement uses at least 2)"
+  type        = number
+  default     = 2
+}
+
+variable "vm_size" {
+  description = "VM SKU for VMSS instances"
+  type        = string
+  default     = "Standard_B1ms"
+}
+
+variable "ssh_public_key_path" {
+  description = "Path to your SSH public key (relative to repo root or absolute). Example: keys/id_rsa.pub or C:\\Users\\you\\.ssh\\id_rsa.pub"
+  type        = string
+  default     = "keys/id_rsa.pub"
+}
