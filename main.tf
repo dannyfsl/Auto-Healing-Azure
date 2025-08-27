@@ -29,3 +29,25 @@ module "network" {
   prefix              = var.prefix
   tags                = var.tags
 }
+
+module "lb" {
+  source              = "./modules/lb"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  prefix              = var.prefix
+  tags                = var.tags
+}
+
+module "compute" {
+  source              = "./modules/compute"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  prefix              = var.prefix
+  subnet_id           = module.network.subnet_id
+  lb_backend_pool_id  = module.lb.backend_pool_id
+  lb_probe_id         = module.lb.probe_id
+  min_size            = var.min_size
+  vm_size             = var.vm_size
+  ssh_public_key_path = var.ssh_public_key_path
+  tags                = var.tags
+}
